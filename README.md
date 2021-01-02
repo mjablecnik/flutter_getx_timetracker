@@ -1,5 +1,5 @@
-[comment]: <> (# Title)
-[comment]: <> (description)
+# Timetracker
+Flutter application for tracking of time
 
 
 ## Installation
