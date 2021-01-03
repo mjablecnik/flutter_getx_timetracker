@@ -19,17 +19,9 @@ class Home extends GetView<BasicController> {
 
       // Replace the 8 lines Navigator.push by a simple Get.to(). You don't need context
       body: Center(
-        child: Column(
-          children: [
-            RaisedButton(
-              child: Text("Go to Other"),
-              onPressed: () => Get.toNamed(Routes.OTHER),
-            ),
-            RaisedButton(
-              child: Text("Go to Jottings"),
-              onPressed: () => Get.toNamed(Routes.JOTTINGS),
-            ),
-          ],
+        child: RaisedButton(
+          child: Text("Go to Other"),
+          onPressed: () => Get.toNamed(Routes.OTHER),
         ),
       ),
       floatingActionButton: FloatingActionButton(
