@@ -1,0 +1,34 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'package:timetracker/controllers/home.dart';
+import 'package:timetracker/models/tab_navigation.dart';
+
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(context) {
+    return GetBuilder<HomeController>(
+      init: HomeController(),
+      builder: (controller) => Scaffold(
+        body: IndexedStack(
+          index: controller.index.toInt(),
+          children: [
+            for (final tabItem in TabNavigationItem.items) tabItem.page,
+          ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: controller.index.toInt(),
+          onTap: controller.changeIndex,
+          items: [
+            for (final tabItem in TabNavigationItem.items)
+              BottomNavigationBarItem(
+                icon: tabItem.icon,
+                label: tabItem.title,
+              )
+          ],
+        ),
+      ),
+    );
+  }
+}
