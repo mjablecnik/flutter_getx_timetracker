@@ -7,7 +7,7 @@ class TrackersController extends GetxController {
 
   increment() => count++;
 
-  addItem(String item) {
-    trackers.add(TimeTracker(item));
+  addItem(TimeTracker item) {
+    trackers.add(item);
   }
 }

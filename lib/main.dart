@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:timetracker/constants.dart';
 import 'package:timetracker/views/home.dart';
 
+import 'controllers/dialog.dart';
 import 'controllers/trackers.dart';
 
 
@@ -15,6 +16,7 @@ Future<void> main() async {
       //initialRoute: Routes.HOME,
       initialBinding: BindingsBuilder(() {
         Get.lazyPut(() => TrackersController(), fenix: true);
+        Get.lazyPut(() => DialogController(), fenix: true);
       }),
       home: HomePage(),
 
