@@ -30,7 +30,6 @@ class TrackersView extends GetView<TrackersController> {
 class TrackerReorderList extends GetView<TrackersController> {
   @override
   Widget build(BuildContext context) {
-
     return CustomScrollView(
       controller: Get.find<ScrollController>(),
       slivers: <Widget>[
@@ -62,19 +61,7 @@ class TrackerItem extends GetView<TrackersController> {
           child: Row(
             children: [
               Expanded(
-                child: ListTile(
-                  title: Padding(
-                    padding: const EdgeInsets.only(bottom: 5),
-                    child: Text(
-                      object.name,
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-                    ),
-                  ),
-                  subtitle: Text(
-                    object.description,
-                    style: TextStyle(fontSize: 13),
-                  ),
-                ),
+                child: buildTextInfo(),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -95,5 +82,31 @@ class TrackerItem extends GetView<TrackersController> {
         ),
       ),
     );
+  }
+
+  ListTile buildTextInfo() {
+    var title = Padding(
+      padding: const EdgeInsets.only(bottom: 5),
+      child: Text(
+        object.name,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+      ),
+    );
+
+    var subtitle = Text(
+      object.description,
+      style: TextStyle(fontSize: 13),
+    );
+
+    if (object.description.isBlank) {
+      return ListTile(
+        title: title,
+      );
+    } else {
+      return ListTile(
+        title: title,
+        subtitle: subtitle,
+      );
+    }
   }
 }
