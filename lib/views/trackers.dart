@@ -10,7 +10,7 @@ class TrackersView extends GetView<TrackersController> {
   @override
   Widget build(context) {
     return Scaffold(
-      appBar: AppBar(),
+      //appBar: AppBar(),
       body: Obx(() => ListView.builder(
             padding: const EdgeInsets.all(10),
             itemCount: controller.trackers.length,

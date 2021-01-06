@@ -11,6 +11,7 @@ class HomePage extends StatelessWidget {
     return GetBuilder<HomeController>(
       init: HomeController(),
       builder: (controller) => Scaffold(
+        appBar: AppBar(title: Text("TimeTracker")),
         body: IndexedStack(
           index: controller.index.toInt(),
           children: [
