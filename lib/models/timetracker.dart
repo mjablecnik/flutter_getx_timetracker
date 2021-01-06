@@ -5,5 +5,5 @@ class TimeTracker {
   DateTime created = DateTime.now();
   DateTime lastChange = DateTime.now();
 
-  TimeTracker(this.name);
+  TimeTracker(this.name, {this.description});
 }
