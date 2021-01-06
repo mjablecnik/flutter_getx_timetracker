@@ -14,4 +14,9 @@ class TrackersController extends GetxController {
   addItem(TimeTracker item) {
     trackers.add(item);
   }
+
+  reorder(int oldIndex, int newIndex) {
+    var row = trackers.removeAt(oldIndex);
+    trackers.insert(newIndex, row);
+  }
 }

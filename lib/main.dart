@@ -17,6 +17,7 @@ Future<void> main() async {
       initialBinding: BindingsBuilder(() {
         Get.lazyPut(() => TrackersController(), fenix: true);
         Get.lazyPut(() => DialogController(), fenix: true);
+        Get.lazyPut(() => ScrollController(), fenix: true);
       }),
       home: HomePage(),
 

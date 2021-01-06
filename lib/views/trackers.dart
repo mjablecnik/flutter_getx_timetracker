@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:reorderables/reorderables.dart';
 import 'package:timetracker/controllers/trackers.dart';
 import 'package:timetracker/models/timetracker.dart';
 
@@ -10,14 +11,7 @@ class TrackersView extends GetView<TrackersController> {
   @override
   Widget build(context) {
     return Scaffold(
-      //appBar: AppBar(),
-      body: Obx(() => ListView.builder(
-            padding: const EdgeInsets.all(10),
-            itemCount: controller.trackers.length,
-            itemBuilder: (context, index) {
-              return TrackerItem(controller.trackers[index]);
-            },
-          )),
+      body: TrackerReorderList(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () => {
@@ -29,6 +23,26 @@ class TrackersView extends GetView<TrackersController> {
           )
         },
       ),
+    );
+  }
+}
+
+class TrackerReorderList extends GetView<TrackersController> {
+  @override
+  Widget build(BuildContext context) {
+
+    return CustomScrollView(
+      controller: Get.find<ScrollController>(),
+      slivers: <Widget>[
+        Obx(
+          () => ReorderableSliverList(
+            delegate: ReorderableSliverChildListDelegate([
+              for (var tracker in controller.trackers) TrackerItem(tracker),
+            ]),
+            onReorder: controller.reorder,
+          ),
+        )
+      ],
     );
   }
 }
