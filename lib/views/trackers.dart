@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:reorderables/reorderables.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:timetracker/controllers/trackers.dart';
 import 'package:timetracker/models/tracker.dart';
 
@@ -53,6 +54,28 @@ class TrackerItem extends GetView<TrackersController> {
 
   @override
   Widget build(BuildContext context) {
+    return Slidable(
+      actionPane: SlidableScrollActionPane(),
+      actionExtentRatio: 0.19,
+      child: buildItemTile(),
+      secondaryActions: <Widget>[
+        IconSlideAction(
+          caption: 'Edit',
+          color: Colors.blue,
+          icon: Icons.edit,
+          onTap: () => print('Edit'),
+        ),
+        IconSlideAction(
+          caption: 'Remove',
+          color: Colors.red,
+          icon: Icons.delete,
+          onTap: () => print('Remove'),
+        ),
+      ],
+    );
+  }
+
+  Container buildItemTile() {
     return Container(
       height: 100,
       child: Card(
