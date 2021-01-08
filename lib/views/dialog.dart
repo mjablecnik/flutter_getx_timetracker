@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:timetracker/controllers/dialog.dart';
 import 'package:timetracker/controllers/trackers.dart';
-import 'package:timetracker/models/timetracker.dart';
+import 'package:timetracker/models/tracker.dart';
 
 class TrackerDialog extends GetView<DialogController> {
   @override
   Widget build(BuildContext context) {
     TrackersController trackersController = Get.find<TrackersController>();
-    controller.model = TimeTracker("New tracker");
+    controller.model = Tracker("New tracker");
 
     return Dialog(
       shape: RoundedRectangleBorder(

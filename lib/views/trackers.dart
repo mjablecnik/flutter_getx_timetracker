@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:reorderables/reorderables.dart';
 import 'package:timetracker/controllers/trackers.dart';
-import 'package:timetracker/models/timetracker.dart';
+import 'package:timetracker/models/tracker.dart';
 
 import 'dialog.dart';
 
@@ -47,7 +47,7 @@ class TrackerReorderList extends GetView<TrackersController> {
 }
 
 class TrackerItem extends GetView<TrackersController> {
-  TimeTracker object;
+  Tracker object;
 
   TrackerItem(this.object);
 

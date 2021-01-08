@@ -1,9 +1,9 @@
-class TimeTracker {
+class Tracker {
 
   String name;
   String description = "";
   DateTime created = DateTime.now();
   DateTime lastChange = DateTime.now();
 
-  TimeTracker(this.name, {this.description});
+  Tracker(this.name, {this.description});
 }
