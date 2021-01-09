@@ -27,7 +27,6 @@ Future<void> main() async {
     },
   );
 
-
   runApp(
     GetMaterialApp(
         smartManagement: SmartManagement.full,

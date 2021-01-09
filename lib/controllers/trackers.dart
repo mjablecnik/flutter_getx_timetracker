@@ -5,11 +5,7 @@ import 'package:timetracker/repositories/tracker.dart';
 class TrackersController extends GetxController {
   TrackerRepository _trackerRepository;
 
-  List<Tracker> trackers = <Tracker>[
-  //  Tracker("Timetracker", description: "Programování timetrackeru."),
-  //  Tracker("Rss feed", description: "Programování Rss feedu."),
-  //  Tracker("Jottings", description: "Programování Jottings aplikace."),
-  ].obs;
+  List<Tracker> trackers = <Tracker>[].obs;
 
 
   TrackersController() {
@@ -28,6 +24,16 @@ class TrackersController extends GetxController {
   }
 
   _load() async {
-    trackers.addAll(await _trackerRepository.getAll());
+    _trackerRepository.getAll().then((List<Tracker> trackerList) {
+      if (trackerList.length == 0) {
+        trackerList = <Tracker>[
+          Tracker("Timetracker", description: "Programování timetrackeru."),
+          Tracker("Rss feed", description: "Programování Rss feedu."),
+          Tracker("Jottings", description: "Programování Jottings aplikace."),
+        ];
+        trackerList.forEach(_trackerRepository.insert);
+      }
+      trackers.addAll(trackerList);
+    });
   }
 }

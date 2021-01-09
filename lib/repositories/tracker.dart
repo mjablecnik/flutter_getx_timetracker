@@ -40,6 +40,6 @@ class TrackerRepository extends GetxService {
 
   Future<List<Tracker>> getAll() async {
     List<Map> rows = await db.query(TrackerTable.tableName);
-    return [ for (var row in rows) Tracker.fromSqlMap(row) ];
+    return [for (var row in rows) Tracker.fromSqlMap(row)];
   }
 }
