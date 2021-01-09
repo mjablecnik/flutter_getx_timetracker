@@ -53,13 +53,12 @@ class TrackerReorderList extends GetView<TrackerListController> {
 
 class TrackerItem extends GetView<TrackerItemController> {
 
-  final Tracker object;
-
-  TrackerItem(this.object);
+  TrackerItem(object) {
+    controller.setupTracker(object);
+  }
 
   @override
   Widget build(BuildContext context) {
-    controller.tracker(this.object);
 
     return Slidable(
       actionPane: SlidableScrollActionPane(),
