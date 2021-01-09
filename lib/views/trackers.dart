@@ -53,7 +53,8 @@ class TrackerReorderList extends GetView<TrackerListController> {
 
 class TrackerItem extends GetView<TrackerItemController> {
   TrackerItem(object) {
-    controller.setupTracker(object);
+    controller.tracker(object);
+    print(controller.tracker);
   }
 
   @override

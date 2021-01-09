@@ -17,10 +17,4 @@ class TrackerItemController extends GetxController {
     tracker(item);
     update();
   }
-
-  void setupTracker(Tracker object) {
-    //tracker = object.obs;
-    tracker(object);
-    print(tracker);
-  }
 }
