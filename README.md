@@ -8,7 +8,6 @@ Flutter application for tracking of time
   git clone <this project>
   cd <this project>
   flutter pub get
-  flutter packages pub run build_runner build
   ```
   
 
@@ -16,8 +15,8 @@ Flutter application for tracking of time
 
  - [Dart](https://dart.dev/): client-optimized language for fast apps on any platform.
  - [Flutter](https://flutter.dev/): UI toolkit for building beautiful, natively compiled applications for mobile, web, and desktop from a single codebase.
- - [GetX](https://pub.dev/packages/get): State management, Dependency injection management and Route management in one simply solution.
- - [HiveDB](https://hivedb.dev/): Lightweight and blazing fast key-value database inspired by Bitcask.
+ - [GetX](https://pub.dev/packages/get): State management, Dependency injection management and Route management in one simple solution.
+ - [sqflite](https://pub.dev/packages/sqflite): Great SQlite database plugin for Flutter.
 
 
 
