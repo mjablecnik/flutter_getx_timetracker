@@ -51,45 +51,44 @@ class TrackerReorderList extends GetView<TrackerListController> {
   }
 }
 
-class TrackerItem extends GetView<TrackerItemController> {
-  TrackerItem(object) {
-    controller.tracker(object);
-    print(controller.tracker);
-  }
+class TrackerItem extends GetWidget<TrackerItemController> {
+  final object;
+
+  TrackerItem(this.object);
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Slidable(
-        actionPane: SlidableScrollActionPane(),
-        actionExtentRatio: 0.19,
-        child: buildItemTile(),
-        secondaryActions: <Widget>[
-          IconSlideAction(
-            caption: 'Edit',
-            color: Colors.blue,
-            icon: Icons.edit,
-            onTap: () => {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return TrackerDialog(
-                    title: "Edit tracker",
-                    tracker: controller.tracker.value,
-                    onSubmit: (item) => controller.edit(item),
-                  );
-                },
-              )
-            },
-          ),
-          IconSlideAction(
-            caption: 'Remove',
-            color: Colors.red,
-            icon: Icons.delete,
-            onTap: () => Get.find<TrackerListController>().removeItem(controller.tracker.value),
-          ),
-        ],
-      ),
+    controller.tracker(object);
+
+    return Slidable(
+      actionPane: SlidableScrollActionPane(),
+      actionExtentRatio: 0.19,
+      child: buildItemTile(),
+      secondaryActions: <Widget>[
+        IconSlideAction(
+          caption: 'Edit',
+          color: Colors.blue,
+          icon: Icons.edit,
+          onTap: () => {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return TrackerDialog(
+                  title: "Edit tracker",
+                  tracker: controller.tracker.value,
+                  onSubmit: (item) => controller.edit(item),
+                );
+              },
+            )
+          },
+        ),
+        IconSlideAction(
+          caption: 'Remove',
+          color: Colors.red,
+          icon: Icons.delete,
+          onTap: () => Get.find<TrackerListController>().removeItem(controller.tracker.value),
+        ),
+      ],
     );
   }
 
@@ -101,7 +100,7 @@ class TrackerItem extends GetView<TrackerItemController> {
           padding: EdgeInsets.all(3),
           child: Row(
             children: [
-              Expanded(child: buildTextInfo(controller.tracker.value)),
+              Expanded(child: Obx(() => buildTextInfo(controller.tracker.value))),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
