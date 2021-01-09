@@ -36,7 +36,6 @@ Future<void> main() async {
         initialBinding: BindingsBuilder(() {
           Get.lazyPut(() => TrackerRepository(db), fenix: true);
           Get.lazyPut(() => TrackerListController(), fenix: true);
-          Get.create(() => TrackerItemController());
           Get.lazyPut(() => DialogController(), fenix: true);
           Get.lazyPut(() => ScrollController(), fenix: true);
         }),

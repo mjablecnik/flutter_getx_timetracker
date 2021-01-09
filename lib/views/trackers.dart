@@ -32,34 +32,33 @@ class TrackersView extends GetView<TrackerListController> {
   }
 }
 
-class TrackerReorderList extends GetView<TrackerListController> {
+class TrackerReorderList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
       controller: Get.find<ScrollController>(),
       slivers: <Widget>[
-        Obx(
-          () => ReorderableSliverList(
+        GetX<TrackerListController>(
+          builder: (c) => ReorderableSliverList(
             delegate: ReorderableSliverChildListDelegate([
-              for (Tracker tracker in controller.trackers) TrackerItem(tracker),
+              for (Tracker tracker in c.trackers)
+                TrackerItem(TrackerItemController(tracker)),
             ]),
-            onReorder: controller.reorder,
-          ),
+            onReorder: c.reorder,
+          )
         )
       ],
     );
   }
 }
 
-class TrackerItem extends GetView<TrackerItemController> {
+class TrackerItem extends StatelessWidget {
+  final controller;
 
-  final Tracker object;
-
-  TrackerItem(this.object);
+  TrackerItem(this.controller);
 
   @override
   Widget build(BuildContext context) {
-    controller.tracker(this.object);
 
     return Slidable(
       actionPane: SlidableScrollActionPane(),
@@ -101,9 +100,7 @@ class TrackerItem extends GetView<TrackerItemController> {
           padding: EdgeInsets.all(3),
           child: Row(
             children: [
-              Expanded(
-                child: buildTextInfo(controller.tracker.value)
-              ),
+              Expanded(child: Obx(() => buildTextInfo(controller.tracker.value))),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
