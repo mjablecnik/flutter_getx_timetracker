@@ -14,7 +14,7 @@ class TrackerItemController extends GetxController {
 
   edit(Tracker item) {
     _trackerRepository.update(item);
-    //tracker(item);
+    tracker(item);
     update();
   }
 

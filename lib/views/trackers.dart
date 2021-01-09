@@ -53,10 +53,8 @@ class TrackerReorderList extends GetView<TrackerListController> {
 
 class TrackerItem extends GetView<TrackerItemController> {
 
-  final Tracker object;
-
-  TrackerItem(this.object) {
-    //controller.setupTracker(object);
+  TrackerItem(object) {
+    controller.setupTracker(object);
   }
 
   @override
@@ -77,8 +75,7 @@ class TrackerItem extends GetView<TrackerItemController> {
               builder: (BuildContext context) {
                 return TrackerDialog(
                   title: "Edit tracker",
-                  //tracker: controller.tracker.value,
-                  tracker: object,
+                  tracker: controller.tracker.value,
                   onSubmit: (item) => controller.edit(item),
                 );
               },
@@ -89,10 +86,7 @@ class TrackerItem extends GetView<TrackerItemController> {
           caption: 'Remove',
           color: Colors.red,
           icon: Icons.delete,
-          onTap: () {
-            //Get.find<TrackerListController>().removeItem(controller.tracker.value);
-            Get.find<TrackerListController>().removeItem(object);
-          },
+          onTap: () => Get.find<TrackerListController>().removeItem(controller.tracker.value),
         ),
       ],
     );
@@ -107,8 +101,7 @@ class TrackerItem extends GetView<TrackerItemController> {
           child: Row(
             children: [
               Expanded(
-                //child: buildTextInfo(controller.tracker.value)
-                child: buildTextInfo(object)
+                child: buildTextInfo(controller.tracker.value)
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
