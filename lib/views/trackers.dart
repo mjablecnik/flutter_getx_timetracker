@@ -41,7 +41,8 @@ class TrackerReorderList extends GetView<TrackerListController> {
         Obx(
           () => ReorderableSliverList(
             delegate: ReorderableSliverChildListDelegate([
-              for (Tracker tracker in controller.trackers) TrackerItem(tracker),
+              for (Tracker tracker in controller.trackers)
+                TrackerItem(TrackerItemController(tracker)),
             ]),
             onReorder: controller.reorder,
           ),
@@ -51,14 +52,13 @@ class TrackerReorderList extends GetView<TrackerListController> {
   }
 }
 
-class TrackerItem extends GetWidget<TrackerItemController> {
-  final object;
+class TrackerItem extends StatelessWidget {
+  final controller;
 
-  TrackerItem(this.object);
+  TrackerItem(this.controller);
 
   @override
   Widget build(BuildContext context) {
-    controller.tracker(object);
 
     return Slidable(
       actionPane: SlidableScrollActionPane(),
