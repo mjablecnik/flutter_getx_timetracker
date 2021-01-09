@@ -18,6 +18,11 @@ class TrackersController extends GetxController {
     _trackerRepository.insert(item);
   }
 
+  removeItem(Tracker item) {
+    trackers.remove(item);
+    _trackerRepository.delete(item.id);
+  }
+
   reorder(int oldIndex, int newIndex) {
     var row = trackers.removeAt(oldIndex);
     trackers.insert(newIndex, row);

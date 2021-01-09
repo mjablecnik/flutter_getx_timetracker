@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:reorderables/reorderables.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:timetracker/controllers/tracker.dart';
 import 'package:timetracker/controllers/trackers.dart';
 import 'package:timetracker/models/tracker.dart';
 
@@ -19,7 +20,10 @@ class TrackersView extends GetView<TrackersController> {
           showDialog(
             context: context,
             builder: (BuildContext context) {
-              return TrackerDialog();
+              return TrackerDialog(
+                title: "Add new tracker",
+                onSubmit: (item) => controller.addItem(item),
+              );
             },
           )
         },
@@ -37,7 +41,7 @@ class TrackerReorderList extends GetView<TrackersController> {
         Obx(
           () => ReorderableSliverList(
             delegate: ReorderableSliverChildListDelegate([
-              for (var tracker in controller.trackers) TrackerItem(tracker),
+              for (Tracker tracker in controller.trackers) TrackerItem(tracker),
             ]),
             onReorder: controller.reorder,
           ),
@@ -47,13 +51,16 @@ class TrackerReorderList extends GetView<TrackersController> {
   }
 }
 
-class TrackerItem extends GetView<TrackersController> {
-  Tracker object;
+class TrackerItem extends GetView<TrackerController> {
+
+  final Tracker object;
 
   TrackerItem(this.object);
 
   @override
   Widget build(BuildContext context) {
+    controller.tracker(this.object);
+
     return Slidable(
       actionPane: SlidableScrollActionPane(),
       actionExtentRatio: 0.19,
@@ -63,13 +70,24 @@ class TrackerItem extends GetView<TrackersController> {
           caption: 'Edit',
           color: Colors.blue,
           icon: Icons.edit,
-          onTap: () => print('Edit'),
+          onTap: () => {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return TrackerDialog(
+                  title: "Edit tracker",
+                  tracker: controller.tracker.value,
+                  onSubmit: (item) => controller.edit(item),
+                );
+              },
+            )
+          },
         ),
         IconSlideAction(
           caption: 'Remove',
           color: Colors.red,
           icon: Icons.delete,
-          onTap: () => print('Remove'),
+          onTap: () => Get.find<TrackersController>().removeItem(controller.tracker.value),
         ),
       ],
     );
@@ -84,7 +102,7 @@ class TrackerItem extends GetView<TrackersController> {
           child: Row(
             children: [
               Expanded(
-                child: buildTextInfo(),
+                child: buildTextInfo(controller.tracker.value)
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -107,7 +125,7 @@ class TrackerItem extends GetView<TrackersController> {
     );
   }
 
-  ListTile buildTextInfo() {
+  ListTile buildTextInfo(Tracker object) {
     var title = Padding(
       padding: const EdgeInsets.only(bottom: 5),
       child: Text(

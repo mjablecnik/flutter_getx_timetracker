@@ -4,11 +4,13 @@ import 'package:get/get.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:timetracker/constants.dart';
+import 'package:timetracker/models/tracker.dart';
 import 'package:timetracker/repositories/tracker.dart';
 import 'package:timetracker/tables/tracker.dart';
 import 'package:timetracker/views/home.dart';
 
 import 'controllers/dialog.dart';
+import 'controllers/tracker.dart';
 import 'controllers/trackers.dart';
 
 Future<void> main() async {
@@ -34,6 +36,7 @@ Future<void> main() async {
         initialBinding: BindingsBuilder(() {
           Get.lazyPut(() => TrackerRepository(db), fenix: true);
           Get.lazyPut(() => TrackersController(), fenix: true);
+          Get.create(() => TrackerController());
           Get.lazyPut(() => DialogController(), fenix: true);
           Get.lazyPut(() => ScrollController(), fenix: true);
         }),

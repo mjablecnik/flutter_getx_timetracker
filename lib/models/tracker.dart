@@ -4,12 +4,12 @@ class Tracker {
 
   int id;
   String name;
-  String description = "";
+  String description;
   DateTime created = DateTime.now();
   DateTime updated = DateTime.now();
 
 
-  Tracker(this.name, {this.description});
+  Tracker(this.name, {this.description = ""});
 
   Tracker.fromSqlMap(Map<String, dynamic> map) {
     id = map[TrackerTable.id];

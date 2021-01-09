@@ -8,6 +8,8 @@ class DialogController extends GetxController {
   TextEditingController dialogInput;
   final formKey = GlobalKey<FormState>();
   var model;
+  String title;
+  Function onSubmit;
 
   void onInit() {
     super.onInit();
@@ -22,10 +24,10 @@ class DialogController extends GetxController {
     print("Dispose dialogController");
   }
 
-  void submit(Function saveModel) {
+  void submit() {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
-      saveModel.call();
+      onSubmit.call(model);
       clearText();
       Get.back();
     }
