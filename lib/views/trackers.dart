@@ -32,20 +32,20 @@ class TrackersView extends GetView<TrackerListController> {
   }
 }
 
-class TrackerReorderList extends GetView<TrackerListController> {
+class TrackerReorderList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
       controller: Get.find<ScrollController>(),
       slivers: <Widget>[
-        Obx(
-          () => ReorderableSliverList(
+        GetX<TrackerListController>(
+          builder: (c) => ReorderableSliverList(
             delegate: ReorderableSliverChildListDelegate([
-              for (Tracker tracker in controller.trackers)
+              for (Tracker tracker in c.trackers)
                 TrackerItem(TrackerItemController(tracker)),
             ]),
-            onReorder: controller.reorder,
-          ),
+            onReorder: c.reorder,
+          )
         )
       ],
     );
