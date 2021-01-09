@@ -9,7 +9,7 @@ import 'package:timetracker/models/tracker.dart';
 
 import 'dialog.dart';
 
-class TrackersView extends GetView<TrackersController> {
+class TrackersView extends GetView<TrackerListController> {
   @override
   Widget build(context) {
     return Scaffold(
@@ -32,7 +32,7 @@ class TrackersView extends GetView<TrackersController> {
   }
 }
 
-class TrackerReorderList extends GetView<TrackersController> {
+class TrackerReorderList extends GetView<TrackerListController> {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -51,7 +51,7 @@ class TrackerReorderList extends GetView<TrackersController> {
   }
 }
 
-class TrackerItem extends GetView<TrackerController> {
+class TrackerItem extends GetView<TrackerItemController> {
 
   final Tracker object;
 
@@ -87,7 +87,7 @@ class TrackerItem extends GetView<TrackerController> {
           caption: 'Remove',
           color: Colors.red,
           icon: Icons.delete,
-          onTap: () => Get.find<TrackersController>().removeItem(controller.tracker.value),
+          onTap: () => Get.find<TrackerListController>().removeItem(controller.tracker.value),
         ),
       ],
     );

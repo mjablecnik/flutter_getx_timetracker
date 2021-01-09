@@ -2,13 +2,13 @@ import 'package:get/get.dart';
 import 'package:timetracker/models/tracker.dart';
 import 'package:timetracker/repositories/tracker.dart';
 
-class TrackersController extends GetxController {
+class TrackerListController extends GetxController {
   TrackerRepository _trackerRepository;
 
   List<Tracker> trackers = <Tracker>[].obs;
 
 
-  TrackersController() {
+  TrackerListController() {
     _trackerRepository = Get.find<TrackerRepository>();
     _load();
   }
