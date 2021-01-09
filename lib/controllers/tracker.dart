@@ -5,7 +5,7 @@ import 'package:timetracker/repositories/tracker.dart';
 class TrackerItemController extends GetxController {
   TrackerRepository _trackerRepository;
 
-  Rx<Tracker> tracker;
+  Rx<Tracker> tracker = Tracker("test").obs;
 
 
   TrackerItemController() {
@@ -19,7 +19,8 @@ class TrackerItemController extends GetxController {
   }
 
   void setupTracker(Tracker object) {
-    tracker = object.obs;
+    //tracker = object.obs;
+    tracker(object);
     print(tracker);
   }
 }
