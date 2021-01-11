@@ -30,6 +30,7 @@ dependencies:
   path: ^1.7.0
   flutter_slidable: ^0.5.7
   implicitly_animated_reorderable_list: ^0.3.2
+  get_storage: ^1.4.0
 
 
   # The following adds the Cupertino Icons font to your application.

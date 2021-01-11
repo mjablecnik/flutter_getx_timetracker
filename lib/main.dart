@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:timetracker/constants.dart';
@@ -26,6 +27,8 @@ Future<void> main() async {
       await db.execute(TrackerTable.createQuery);
     },
   );
+
+  await GetStorage.init();
 
   runApp(
     GetMaterialApp(
