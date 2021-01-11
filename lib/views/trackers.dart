@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:reorderables/reorderables.dart';
+import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
+import 'package:implicitly_animated_reorderable_list/transitions.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:timetracker/controllers/tracker.dart';
 import 'package:timetracker/controllers/trackers.dart';
@@ -35,19 +36,33 @@ class TrackersView extends GetView<TrackerListController> {
 class TrackerReorderList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      controller: Get.find<ScrollController>(),
-      slivers: <Widget>[
-        GetX<TrackerListController>(
-          builder: (c) => ReorderableSliverList(
-            delegate: ReorderableSliverChildListDelegate([
-              for (Tracker tracker in c.trackers)
-                TrackerItem(TrackerItemController(tracker)),
-            ]),
-            onReorder: c.reorder,
-          )
-        )
-      ],
+    return GetX<TrackerListController>(
+      builder: (c) {
+        if (c.trackers.length > 0) {
+          return ImplicitlyAnimatedReorderableList<Tracker>(
+            items: c.trackers,
+            areItemsTheSame: (oldItem, newItem) => oldItem.id == newItem.id,
+            onReorderFinished: (item, from, to, newItems) {
+              c.reorder(from, to);
+            },
+            itemBuilder: (context, itemAnimation, item, index) {
+              return Reorderable(
+                key: ValueKey(item),
+                builder: (context, dragAnimation, inDrag) {
+                  return SizeFadeTransition(
+                    sizeFraction: 0.5,
+                    curve: Curves.easeIn,
+                    animation: itemAnimation,
+                    child: TrackerItem(TrackerItemController(item)),
+                  );
+                },
+              );
+            },
+          );
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
     );
   }
 }
@@ -59,7 +74,6 @@ class TrackerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Slidable(
       actionPane: SlidableScrollActionPane(),
       actionExtentRatio: 0.19,
@@ -112,7 +126,13 @@ class TrackerItem extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: ButtonBar(
                   buttonPadding: const EdgeInsets.all(8.0),
-                  children: [Icon(Icons.play_arrow), Icon(Icons.drag_indicator)],
+                  children: [
+                    Icon(Icons.play_arrow),
+                    Handle(
+                      delay: const Duration(milliseconds: 100),
+                      child: Icon(Icons.drag_indicator),
+                    ),
+                  ],
                 ),
               )
             ],

@@ -5,7 +5,7 @@ import 'package:timetracker/repositories/tracker.dart';
 class TrackerListController extends GetxController {
   TrackerRepository _trackerRepository;
 
-  List<Tracker> trackers = <Tracker>[].obs;
+  RxList<Tracker> trackers = <Tracker>[].obs;
 
 
   TrackerListController() {
@@ -38,7 +38,7 @@ class TrackerListController extends GetxController {
         ];
         trackerList.forEach(_trackerRepository.insert);
       }
-      trackers.addAll(trackerList);
+      trackerList.forEach(trackers.add);
     });
   }
 }
