@@ -1,8 +1,8 @@
 import 'package:get/state_manager.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:timetracker/data/entity_mapper.dart';
-import 'package:timetracker/models/tracker.dart';
-import 'package:timetracker/tables/tracker.dart';
+import 'package:timetracker/data/models/tracker.dart';
+import 'package:timetracker/data/tables/tracker.dart';
 
 class TrackerRepository extends GetxService {
   Database _db;

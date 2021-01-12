@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
 import 'package:implicitly_animated_reorderable_list/transitions.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:timetracker/controllers/tracker.dart';
-import 'package:timetracker/controllers/trackers.dart';
-import 'package:timetracker/models/tracker.dart';
+import 'package:timetracker/controllers/tracker_item.dart';
+import 'package:timetracker/controllers/tracker_list.dart';
+import 'package:timetracker/data/models/tracker.dart';
 
 import 'dialog.dart';
 

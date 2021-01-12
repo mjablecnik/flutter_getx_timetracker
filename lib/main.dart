@@ -5,12 +5,12 @@ import 'package:get_storage/get_storage.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:timetracker/constants.dart';
-import 'package:timetracker/repositories/tracker.dart';
-import 'package:timetracker/tables/tracker.dart';
+import 'package:timetracker/data/repositories/tracker.dart';
+import 'package:timetracker/data/tables/tracker.dart';
 import 'package:timetracker/views/home.dart';
 
 import 'controllers/dialog.dart';
-import 'controllers/trackers.dart';
+import 'controllers/tracker_list.dart';
 import 'data/entity_mapper.dart';
 
 Future<void> main() async {

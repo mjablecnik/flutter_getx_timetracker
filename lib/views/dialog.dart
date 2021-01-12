@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:timetracker/controllers/dialog.dart';
-import 'package:timetracker/models/tracker.dart';
+import 'package:timetracker/data/models/tracker.dart';
 
 class TrackerDialog extends GetView<DialogController> {
 

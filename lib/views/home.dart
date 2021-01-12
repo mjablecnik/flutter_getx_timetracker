@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:timetracker/controllers/home.dart';
-import 'package:timetracker/models/tab_navigation.dart';
+import 'package:timetracker/data/models/tab_navigation.dart';
 
 class HomePage extends StatelessWidget {
   @override

@@ -1,11 +1,12 @@
-import 'package:timetracker/constants.dart';
 
-class ActionModel {
+enum ActionState { start, stop }
+
+class Action {
   int trackerId;
-  Action action;
+  ActionState action;
   DateTime created = DateTime.now();
 
-  ActionModel(this.trackerId, this.action);
+  Action(this.trackerId, this.action);
 
   @override
   String toString() {

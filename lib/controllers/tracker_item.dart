@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:timetracker/models/tracker.dart';
-import 'package:timetracker/repositories/tracker.dart';
+import 'package:timetracker/data/models/tracker.dart';
+import 'package:timetracker/data/repositories/tracker.dart';
 
 class TrackerItemController extends GetxController {
   TrackerRepository _trackerRepository;

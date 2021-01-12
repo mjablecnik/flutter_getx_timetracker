@@ -1,19 +1,18 @@
 import 'package:get/get.dart';
-import 'package:timetracker/constants.dart';
-import 'package:timetracker/models/action.dart';
-import 'package:timetracker/models/tracker.dart';
-import 'package:timetracker/tables/action.dart';
-import 'package:timetracker/tables/tracker.dart';
+import 'package:timetracker/data/models/action.dart';
+import 'package:timetracker/data/models/tracker.dart';
+import 'package:timetracker/data/tables/action.dart';
+import 'package:timetracker/data/tables/tracker.dart';
 import 'package:timetracker/utils.dart';
 
 class EntityMapper extends GetxService {
 
-  ActionModel fromSqlMapToAction(Map<String, dynamic> map) {
-    return ActionModel(map[ActionTable.trackerId], enumFromString(Action.values, map[ActionTable.action]))
+  Action fromSqlMapToAction(Map<String, dynamic> map) {
+    return Action(map[ActionTable.trackerId], enumFromString(ActionState.values, map[ActionTable.action]))
       ..created = DateTime.parse(map[ActionTable.created]);
   }
 
-  Map<String, dynamic> toSqlMapFromAction(ActionModel object) {
+  Map<String, dynamic> toSqlMapFromAction(Action object) {
     return <String, dynamic>{
       ActionTable.trackerId: object.trackerId,
       ActionTable.action: object.action.toString(),

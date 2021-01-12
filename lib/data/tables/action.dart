@@ -1,4 +1,4 @@
-import 'package:timetracker/tables/tracker.dart';
+import 'package:timetracker/data/tables/tracker.dart';
 
 class ActionTable {
   static const String tableName = "action";
