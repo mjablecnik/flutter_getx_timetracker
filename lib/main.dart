@@ -11,6 +11,7 @@ import 'package:timetracker/views/home.dart';
 
 import 'controllers/dialog.dart';
 import 'controllers/trackers.dart';
+import 'data/entity_mapper.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,13 +21,14 @@ Future<void> main() async {
 
   //await deleteDatabase(path);
 
-  var db = await openDatabase(
+  Database db = await openDatabase(
     path,
     version: 1,
     onCreate: (Database db, int version) async {
       await db.execute(TrackerTable.createQuery);
     },
   );
+
 
   await GetStorage.init();
 
@@ -35,7 +37,7 @@ Future<void> main() async {
         smartManagement: SmartManagement.full,
         //initialRoute: Routes.HOME,
         initialBinding: BindingsBuilder(() {
-          Get.lazyPut(() => TrackerRepository(db), fenix: true);
+          Get.lazyPut(() => TrackerRepository(db, EntityMapper()), fenix: true);
           Get.lazyPut(() => TrackerListController(), fenix: true);
           Get.lazyPut(() => DialogController(), fenix: true);
         }),

@@ -1,21 +1,24 @@
 import 'package:get/state_manager.dart';
+import 'package:sqflite/sqlite_api.dart';
+import 'package:timetracker/data/entity_mapper.dart';
 import 'package:timetracker/models/tracker.dart';
 import 'package:timetracker/tables/tracker.dart';
 
 class TrackerRepository extends GetxService {
-  var db;
+  Database _db;
+  EntityMapper _entityMapper;
 
-  TrackerRepository(this.db);
+  TrackerRepository(this._db, this._entityMapper);
 
   Future<Tracker> insert(Tracker tracker) async {
-    tracker.id = await db.insert(TrackerTable.tableName, tracker.toSqlMap());
+    tracker.id = await _db.insert(TrackerTable.tableName, _entityMapper.toSqlMapFromTracker(tracker));
     return tracker;
   }
 
   Future<Tracker> update(Tracker tracker) async {
-    tracker.id = await db.update(
+    tracker.id = await _db.update(
       TrackerTable.tableName,
-      tracker.toSqlMap(),
+      _entityMapper.toSqlMapFromTracker(tracker),
       where: '${TrackerTable.id} = ?',
       whereArgs: [tracker.id],
     );
@@ -23,23 +26,23 @@ class TrackerRepository extends GetxService {
   }
 
   Future<int> delete(int id) async {
-    return await db.delete(TrackerTable.tableName, where: '${TrackerTable.id} = ?', whereArgs: [id]);
+    return await _db.delete(TrackerTable.tableName, where: '${TrackerTable.id} = ?', whereArgs: [id]);
   }
 
   Future<Tracker> getById(int id) async {
-    List<Map> maps = await db.query(
+    List<Map> maps = await _db.query(
       TrackerTable.tableName,
       where: '${TrackerTable.id} = ?',
       whereArgs: [id],
     );
     if (maps.length > 0) {
-      return Tracker.fromSqlMap(maps.first);
+      return _entityMapper.fromSqlMapToTracker(maps.first);
     }
     return null;
   }
 
   Future<List<Tracker>> getAll() async {
-    List<Map> rows = await db.query(TrackerTable.tableName);
-    return [for (var row in rows) Tracker.fromSqlMap(row)];
+    List<Map> rows = await _db.query(TrackerTable.tableName);
+    return [for (var row in rows) _entityMapper.fromSqlMapToTracker(row)];
   }
 }
