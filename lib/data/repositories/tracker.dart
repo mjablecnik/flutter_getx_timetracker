@@ -15,14 +15,13 @@ class TrackerRepository extends GetxService {
     return tracker;
   }
 
-  Future<Tracker> update(Tracker tracker) async {
-    tracker.id = await _db.update(
+  Future<int> update(Tracker tracker) async {
+    return await _db.update(
       TrackerTable.tableName,
       _entityMapper.toSqlMapFromTracker(tracker),
       where: '${TrackerTable.id} = ?',
       whereArgs: [tracker.id],
     );
-    return tracker;
   }
 
   Future<int> delete(int id) async {

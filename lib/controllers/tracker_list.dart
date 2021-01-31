@@ -35,7 +35,8 @@ class TrackerListController extends GetxController {
   }
   
   updateSequence() {
-    box.write(BoxStorage.trackerSequence, trackers.map((e) => e.id).toList());
+    var trackersIdList = trackers.map((e) => e.id).toList();
+    box.write(BoxStorage.trackerSequence, trackersIdList);
   }
 
   _load() async {
