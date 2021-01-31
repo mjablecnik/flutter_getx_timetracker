@@ -1,3 +1,4 @@
+import 'package:animated_indexed_stack/animated_indexed_stack.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -6,7 +7,6 @@ import 'package:timetracker/controllers/home.dart';
 import 'package:timetracker/views/history.dart';
 import 'package:timetracker/views/review.dart';
 import 'package:timetracker/views/trackers.dart';
-
 
 class TabNavigationItem {
   final Widget page;
@@ -38,7 +38,6 @@ class TabNavigationItem {
   ];
 }
 
-
 class HomePage extends StatelessWidget {
   @override
   Widget build(context) {
@@ -46,14 +45,15 @@ class HomePage extends StatelessWidget {
       init: HomeController(),
       builder: (controller) => Scaffold(
         appBar: AppBar(title: Text("TimeTracker")),
-        body: IndexedStack(
-          index: controller.index.toInt(),
+        body: AnimatedIndexedStack(
+          transitionBuilder: slideTransition,
+          selectedIndex: controller.index,
           children: [
             for (final tabItem in TabNavigationItem.items) tabItem.page,
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
-          currentIndex: controller.index.toInt(),
+          currentIndex: controller.index,
           onTap: controller.changeIndex,
           items: [
             for (final tabItem in TabNavigationItem.items)
@@ -67,3 +67,33 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+
+final RouteTransitionsBuilder slideTransition = (
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+    ) {
+  return GetBuilder<HomeController>(
+    init: HomeController(),
+    builder: (c) {
+      Widget appear = SlideTransition(
+        position: Tween<Offset>(
+          begin: Offset(c.transitionPos.toDouble(), 0.0),
+          end: const Offset(0.0, 0.0),
+        ).animate(animation),
+        child: child,
+      );
+
+      Widget disappear = SlideTransition(
+        position: Tween<Offset>(
+          begin: const Offset(0.0, 0.0),
+          end: Offset(-c.transitionPos.toDouble(), 0.0),
+        ).animate(secondaryAnimation),
+        child: appear,
+      );
+
+      return disappear;
+    },
+  );
+};
