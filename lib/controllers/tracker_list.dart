@@ -5,14 +5,13 @@ import 'package:timetracker/data/models/tracker.dart';
 import 'package:timetracker/data/repositories/tracker.dart';
 
 class TrackerListController extends GetxController {
-  TrackerRepository _trackerRepository;
+  final TrackerRepository _trackerRepository = Get.find<TrackerRepository>();
 
   RxList<Tracker> trackers = <Tracker>[].obs;
 
   final box = GetStorage();
 
   TrackerListController() {
-    _trackerRepository = Get.find<TrackerRepository>();
     _load();
   }
 

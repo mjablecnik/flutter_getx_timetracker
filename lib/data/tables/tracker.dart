@@ -4,6 +4,7 @@ class TrackerTable {
   static const String id = "id";
   static const String name = "name";
   static const String description = "description";
+  static const String elapsedTime = "elapsed_time";
   static const String created = "created";
   static const String updated = "updated";
 
@@ -14,5 +15,10 @@ class TrackerTable {
         ${TrackerTable.description} text not null,
         ${TrackerTable.created} text not null,
         ${TrackerTable.updated} text not null);
+        ${TrackerTable.elapsedTime} text,
       ''';
+
+  static const String addElapsedTimeQuery = '''
+    ALTER TABLE ${TrackerTable.tableName} ADD ${TrackerTable.elapsedTime} TEXT;
+  ''';
 }

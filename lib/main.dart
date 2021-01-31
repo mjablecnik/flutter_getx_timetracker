@@ -23,9 +23,14 @@ Future<void> main() async {
 
   Database db = await openDatabase(
     path,
-    version: 1,
+    version: 2,
     onCreate: (Database db, int version) async {
       await db.execute(TrackerTable.createQuery);
+    },
+    onUpgrade: (db, oldVersion, newVersion) async {
+      if (oldVersion == 1) {
+        await db.execute(TrackerTable.addElapsedTimeQuery);
+      }
     },
   );
 

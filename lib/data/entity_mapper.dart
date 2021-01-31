@@ -1,3 +1,4 @@
+import 'package:duration/duration.dart';
 import 'package:get/get.dart';
 import 'package:timetracker/data/models/action.dart';
 import 'package:timetracker/data/models/tracker.dart';
@@ -26,7 +27,9 @@ class EntityMapper extends GetxService {
       ..name = map[TrackerTable.name]
       ..description = map[TrackerTable.description]
       ..created = DateTime.parse(map[TrackerTable.created])
-      ..updated = DateTime.parse(map[TrackerTable.updated]);
+      ..updated = DateTime.parse(map[TrackerTable.updated])
+      ..elapsedTime = tryParseDuration(map[TrackerTable.elapsedTime]) ?? Duration.zero;
+
   }
 
   Map<String, dynamic> toSqlMapFromTracker(Tracker object) {
@@ -35,6 +38,7 @@ class EntityMapper extends GetxService {
       TrackerTable.description: object.description,
       TrackerTable.created: object.created.toIso8601String(),
       TrackerTable.updated: object.updated.toIso8601String(),
+      TrackerTable.elapsedTime: prettyDuration(object.elapsedTime, abbreviated: true),
     };
     if (object.id != null) {
       map[TrackerTable.id] = object.id;

@@ -32,6 +32,7 @@ dependencies:
   implicitly_animated_reorderable_list: ^0.3.2
   get_storage: ^1.4.0
   animated_indexed_stack: ^0.0.7
+  duration: ^2.0.15
 
 
   # The following adds the Cupertino Icons font to your application.
