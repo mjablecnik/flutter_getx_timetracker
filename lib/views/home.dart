@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:timetracker/controllers/home.dart';
 import 'package:timetracker/views/history.dart';
 import 'package:timetracker/views/review.dart';
-import 'package:timetracker/views/trackers.dart';
+import 'package:timetracker/views/tracker_list.dart';
 
 class TabNavigationItem {
   final Widget page;
@@ -21,7 +21,7 @@ class TabNavigationItem {
 
   static List<TabNavigationItem> get items => [
     TabNavigationItem(
-      page: TrackersView(),
+      page: TrackerListView(),
       icon: Icon(Icons.timelapse),
       title: "Time trackers",
     ),

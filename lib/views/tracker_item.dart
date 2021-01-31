@@ -10,63 +10,6 @@ import 'package:timetracker/data/models/tracker.dart';
 
 import 'dialog.dart';
 
-class TrackersView extends GetView<TrackerListController> {
-  @override
-  Widget build(context) {
-    return Scaffold(
-      body: TrackerReorderList(),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return TrackerDialog(
-                title: "Add new tracker",
-                onSubmit: (item) => controller.addItem(item),
-              );
-            },
-          )
-        },
-      ),
-    );
-  }
-}
-
-class TrackerReorderList extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return GetX<TrackerListController>(
-      builder: (c) {
-        if (c.trackers.length > 0) {
-          return ImplicitlyAnimatedReorderableList<Tracker>(
-            items: c.trackers,
-            areItemsTheSame: (oldItem, newItem) => oldItem.id == newItem.id,
-            onReorderFinished: (item, from, to, newItems) {
-              c.reorder(from, to);
-            },
-            itemBuilder: (context, itemAnimation, item, index) {
-              return Reorderable(
-                key: ValueKey(item),
-                builder: (context, dragAnimation, inDrag) {
-                  return SizeFadeTransition(
-                    sizeFraction: 0.5,
-                    curve: Curves.easeIn,
-                    animation: itemAnimation,
-                    child: TrackerItem(TrackerItemController(item)),
-                  );
-                },
-              );
-            },
-          );
-        } else {
-          return Center(child: CircularProgressIndicator());
-        }
-      },
-    );
-  }
-}
-
 class TrackerItem extends StatelessWidget {
   final controller;
 
