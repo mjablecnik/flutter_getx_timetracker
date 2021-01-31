@@ -11,7 +11,7 @@ import 'package:timetracker/data/models/tracker.dart';
 import 'dialog.dart';
 
 class TrackerItem extends StatelessWidget {
-  final controller;
+  final TrackerItemController controller;
 
   TrackerItem(this.controller);
 
@@ -32,7 +32,7 @@ class TrackerItem extends StatelessWidget {
               builder: (BuildContext context) {
                 return TrackerDialog(
                   title: "Edit tracker",
-                  tracker: controller.tracker.value,
+                  tracker: controller.tracker,
                   onSubmit: (item) => controller.edit(item),
                 );
               },
@@ -43,7 +43,7 @@ class TrackerItem extends StatelessWidget {
           caption: 'Remove',
           color: Colors.red,
           icon: Icons.delete,
-          onTap: () => Get.find<TrackerListController>().removeItem(controller.tracker.value),
+          onTap: () => Get.find<TrackerListController>().removeItem(controller.tracker),
         ),
       ],
     );
@@ -57,20 +57,32 @@ class TrackerItem extends StatelessWidget {
           padding: EdgeInsets.all(3),
           child: Row(
             children: [
-              Expanded(child: Obx(() => buildTextInfo(controller.tracker.value))),
+              Expanded(child: Obx(() => buildTextInfo(controller.tracker))),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "1:37:08",
+                child: Obx(() => Text(
+                  controller.timeFormated,
                   style: TextStyle(fontSize: 20),
-                ),
+                )),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ButtonBar(
                   buttonPadding: const EdgeInsets.all(8.0),
                   children: [
-                    Icon(Icons.play_arrow),
+                    Obx(() {
+                      if (controller.inProgress) {
+                        return GestureDetector(
+                          onTap: controller.stop,
+                          child: Icon(Icons.stop),
+                        );
+                      } else {
+                        return GestureDetector(
+                          onTap: controller.play,
+                          child: Icon(Icons.play_arrow),
+                        );
+                      }
+                    }),
                     Handle(
                       delay: const Duration(milliseconds: 100),
                       child: Icon(Icons.drag_indicator),
