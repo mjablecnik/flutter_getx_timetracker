@@ -2,6 +2,7 @@
 enum ActionState { start, stop }
 
 class Action {
+  int id;
   int trackerId;
   ActionState action;
   DateTime created = DateTime.now();

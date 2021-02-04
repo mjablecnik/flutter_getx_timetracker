@@ -6,12 +6,14 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:timetracker/constants.dart';
 import 'package:timetracker/data/repositories/tracker.dart';
+import 'package:timetracker/data/tables/action.dart';
 import 'package:timetracker/data/tables/tracker.dart';
 import 'package:timetracker/views/home.dart';
 
 import 'controllers/dialog.dart';
 import 'controllers/tracker_list.dart';
 import 'data/entity_mapper.dart';
+import 'data/repositories/action.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,16 +23,31 @@ Future<void> main() async {
 
   //await deleteDatabase(path);
 
+  Future onConfigure(Database db) async {
+    await db.execute('PRAGMA foreign_keys = ON');
+  }
+
   Database db = await openDatabase(
     path,
-    version: 2,
+    version: 4,
     onCreate: (Database db, int version) async {
-      await db.execute(TrackerTable.createQuery);
+      var batch = db.batch();
+      batch.execute(TrackerTable.createQuery);
+      batch.execute(ActionTable.createQuery);
+      await batch.commit();
     },
     onUpgrade: (db, oldVersion, newVersion) async {
-      if (oldVersion == 1) {
-        await db.execute(TrackerTable.addElapsedTimeQuery);
+      var batch = db.batch();
+      if (oldVersion <= 1) {
+        batch.execute(TrackerTable.addElapsedTimeColumnQuery);
       }
+      if (oldVersion <= 2) {
+        batch.execute(TrackerTable.addInProgressColumnQuery);
+      }
+      if (oldVersion <= 3) {
+        batch.execute(ActionTable.createQuery);
+      }
+      await batch.commit();
     },
   );
 
@@ -43,6 +60,7 @@ Future<void> main() async {
         //initialRoute: Routes.HOME,
         initialBinding: BindingsBuilder(() {
           Get.lazyPut(() => TrackerRepository(db, EntityMapper()), fenix: true);
+          Get.lazyPut(() => ActionRepository(db, EntityMapper()), fenix: true);
           Get.lazyPut(() => TrackerListController(), fenix: true);
           Get.lazyPut(() => DialogController(), fenix: true);
         }),

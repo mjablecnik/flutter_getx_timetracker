@@ -1,10 +1,13 @@
 import 'package:get/get.dart';
+import 'package:timetracker/data/models/action.dart';
 import 'package:timetracker/data/models/tracker.dart';
+import 'package:timetracker/data/repositories/action.dart';
 import 'package:timetracker/data/repositories/tracker.dart';
 import 'package:timetracker/utils.dart';
 
 class TrackerItemController extends GetxController {
   final TrackerRepository _trackerRepository = Get.find<TrackerRepository>();
+  final ActionRepository _actionRepository = Get.find<ActionRepository>();
 
   Rx<Tracker> _tracker;
   Rx<Duration> _time = Duration.zero.obs;
@@ -21,6 +24,12 @@ class TrackerItemController extends GetxController {
   TrackerItemController(Tracker tracker) {
     this._tracker = tracker.obs;
     this._startTime = this._tracker.value.elapsedTime;
+
+    if (this._tracker.value.inProgress) {
+      play(save: false);
+      int elapsedTimeFromLastSave = DateTime.now().millisecondsSinceEpoch - _tracker.value.updated.millisecondsSinceEpoch;
+      this._startTime += Duration(milliseconds: elapsedTimeFromLastSave);
+    }
     this._time.value = this._startTime;
   }
 
@@ -29,17 +38,26 @@ class TrackerItemController extends GetxController {
     _tracker(item);
   }
 
-  play() {
+  play({ bool save = true }) {
     _stopwatch.start();
     _inProgress.value = true;
     _updateTime();
+
+    if (save) {
+      _tracker.value.inProgress = _inProgress.value;
+      _trackerRepository.update(_tracker.value);
+      _actionRepository.insert(Action(_tracker.value.id, ActionState.start));
+    }
   }
 
   stop() {
     _stopwatch.stop();
     _inProgress.value = false;
+
     _tracker.value.elapsedTime = _time.value;
+    _tracker.value.inProgress = _inProgress.value;
     _trackerRepository.update(_tracker.value);
+    _actionRepository.insert(Action(_tracker.value.id, ActionState.stop));
   }
 
   _updateTime() {

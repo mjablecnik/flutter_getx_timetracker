@@ -7,6 +7,7 @@ class TrackerTable {
   static const String elapsedTime = "elapsed_time";
   static const String created = "created";
   static const String updated = "updated";
+  static const String inProgress = "in_progress";
 
   static const String createQuery = '''
       create table if not exists ${TrackerTable.tableName} ( 
@@ -14,11 +15,16 @@ class TrackerTable {
         ${TrackerTable.name} text not null,
         ${TrackerTable.description} text not null,
         ${TrackerTable.created} text not null,
-        ${TrackerTable.updated} text not null);
+        ${TrackerTable.updated} text not null,
         ${TrackerTable.elapsedTime} text,
+        ${TrackerTable.inProgress} integer
+      );
       ''';
 
-  static const String addElapsedTimeQuery = '''
+  static const String addElapsedTimeColumnQuery = '''
     ALTER TABLE ${TrackerTable.tableName} ADD ${TrackerTable.elapsedTime} TEXT;
+  ''';
+  static const String addInProgressColumnQuery = '''
+    ALTER TABLE ${TrackerTable.tableName} ADD ${TrackerTable.inProgress} integer;
   ''';
 }
