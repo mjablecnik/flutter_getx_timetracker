@@ -21,7 +21,10 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  get: ^3.24.0
+  get:
+    git:
+      url: https://github.com/mjablecnik/getx.git
+      ref: master
   flutter:
     sdk: flutter
   reorderables: ^0.3.2
@@ -30,9 +33,10 @@ dependencies:
   path: ^1.7.0
   flutter_slidable: ^0.5.7
   implicitly_animated_reorderable_list: ^0.3.2
-  get_storage: ^1.4.0
   animated_indexed_stack: ^0.0.7
   duration: ^2.0.15
+  hive: ^1.4.4+1
+  hive_flutter: ^0.3.1
 
 
   # The following adds the Cupertino Icons font to your application.

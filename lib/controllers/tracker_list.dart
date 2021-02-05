@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:hive/hive.dart';
 import 'package:timetracker/constants.dart';
 import 'package:timetracker/data/models/tracker.dart';
 import 'package:timetracker/data/repositories/tracker.dart';
@@ -9,7 +9,7 @@ class TrackerListController extends GetxController {
 
   RxList<Tracker> trackers = <Tracker>[].obs;
 
-  final box = GetStorage();
+  Box box = Hive.box(BoxStorage.boxName);
 
   TrackerListController() {
     _load();
@@ -36,12 +36,12 @@ class TrackerListController extends GetxController {
   
   updateSequence() {
     var trackersIdList = trackers.map((e) => e.id).toList();
-    box.write(BoxStorage.trackerSequence, trackersIdList);
+    box.put(BoxStorage.trackerSequence, trackersIdList);
   }
 
   _load() async {
     List<Tracker> trackerList = await _trackerRepository.getAll();
-    List<dynamic> trackerSequence = box.read(BoxStorage.trackerSequence);
+    List<dynamic> trackerSequence = box.get(BoxStorage.trackerSequence);
 
     if (trackerList.length == 0) {
       trackerList = <Tracker>[

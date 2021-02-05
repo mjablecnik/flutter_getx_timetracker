@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:hive/hive.dart';
 import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:timetracker/constants.dart';
 import 'package:timetracker/data/repositories/tracker.dart';
@@ -51,8 +52,9 @@ Future<void> main() async {
     },
   );
 
-
-  await GetStorage.init();
+  final directory = await getApplicationDocumentsDirectory();
+  Hive.init(directory.path);
+  await Hive.openBox(BoxStorage.boxName);
 
   runApp(
     GetMaterialApp(
