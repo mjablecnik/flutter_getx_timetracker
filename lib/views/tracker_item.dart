@@ -57,38 +57,43 @@ class TrackerItem extends StatelessWidget {
           padding: EdgeInsets.all(3),
           child: Row(
             children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 6.0),
+                child: Handle(
+                  delay: const Duration(milliseconds: 100),
+                  child: Icon(Icons.drag_indicator),
+                ),
+              ),
               Expanded(child: Obx(() => buildTextInfo(controller.tracker))),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(4.0),
                 child: Obx(() => Text(
-                  controller.timeFormated,
-                  style: TextStyle(fontSize: 20),
-                )),
+                      controller.timeFormated,
+                      style: TextStyle(fontSize: 20),
+                    )),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: ButtonBar(
-                  buttonPadding: const EdgeInsets.all(8.0),
-                  children: [
-                    Obx(() {
-                      if (controller.inProgress) {
-                        return GestureDetector(
+                child: Obx(() {
+                  return ButtonBar(
+                    children: [
+                      if (controller.inProgress)
+                        GestureDetector(
                           onTap: controller.stop,
-                          child: Icon(Icons.stop),
-                        );
-                      } else {
-                        return GestureDetector(
+                          child: Icon(Icons.pause),
+                        )
+                      else
+                        GestureDetector(
                           onTap: controller.play,
                           child: Icon(Icons.play_arrow),
-                        );
-                      }
-                    }),
-                    Handle(
-                      delay: const Duration(milliseconds: 100),
-                      child: Icon(Icons.drag_indicator),
-                    ),
-                  ],
-                ),
+                        ),
+                      GestureDetector(
+                        //onTap: controller.play,
+                        child: Icon(Icons.save_alt),
+                      ),
+                    ],
+                  );
+                }),
               )
             ],
           ),

@@ -49,7 +49,8 @@ class HomePage extends StatelessWidget {
           transitionBuilder: slideTransition,
           selectedIndex: controller.index,
           children: [
-            for (final tabItem in TabNavigationItem.items) tabItem.page,
+            for (final tabItem in TabNavigationItem.items)
+              tabItem.page,
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
