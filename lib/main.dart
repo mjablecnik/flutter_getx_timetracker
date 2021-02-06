@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:timetracker/constants.dart';
 import 'package:timetracker/data/repositories/tracker.dart';
@@ -56,10 +57,13 @@ Future<void> main() async {
   Hive.init(directory.path);
   await Hive.openBox(BoxStorage.boxName);
 
-  runApp(
-    GetMaterialApp(
+  runApp(DevicePreview(
+    enabled: false,
+    builder: (context) => MaterialApp(
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
+      home: GetMaterialApp(
         smartManagement: SmartManagement.full,
-        //initialRoute: Routes.HOME,
         initialBinding: BindingsBuilder(() {
           Get.lazyPut(() => TrackerRepository(db, EntityMapper()), fenix: true);
           Get.lazyPut(() => ActionRepository(db, EntityMapper()), fenix: true);
@@ -67,8 +71,7 @@ Future<void> main() async {
           Get.lazyPut(() => DialogController(), fenix: true);
         }),
         home: HomePage(),
-        getPages: [
-          GetPage(name: Routes.HOME, page: () => HomePage()),
-        ]),
-  );
+      ),
+    ),
+  ));
 }
