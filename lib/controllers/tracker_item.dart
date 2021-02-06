@@ -27,6 +27,15 @@ class TrackerItemController extends GetxController {
 
     if (this._tracker.value.inProgress) {
       play(save: false);
+    }
+    updateTimeValue();
+  }
+
+  updateTimeValue() {
+    this._startTime = this._tracker.value.elapsedTime;
+    _stopwatch.reset();
+
+    if (this._tracker.value.inProgress) {
       int elapsedTimeFromLastSave = DateTime.now().millisecondsSinceEpoch - _tracker.value.updated.millisecondsSinceEpoch;
       this._startTime += Duration(milliseconds: elapsedTimeFromLastSave);
     }

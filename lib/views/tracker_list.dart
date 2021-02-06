@@ -53,7 +53,7 @@ class TrackerReorderList extends StatelessWidget {
                     sizeFraction: 0.5,
                     curve: Curves.easeIn,
                     animation: itemAnimation,
-                    child: TrackerItem(TrackerItemController(item)),
+                    child: TrackerItem(item.controller),
                   );
                 },
               );

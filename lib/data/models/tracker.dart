@@ -7,6 +7,8 @@ class Tracker {
   Duration elapsedTime = Duration.zero;
   bool inProgress = false;
 
+  var controller;
+
   Tracker(this.name, {this.description = ""});
 
   @override

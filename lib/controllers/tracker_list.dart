@@ -1,22 +1,42 @@
+import 'package:flutter/widgets.dart' show WidgetsBindingObserver, WidgetsBinding, AppLifecycleState;
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:timetracker/constants.dart';
+import 'package:timetracker/controllers/tracker_item.dart';
 import 'package:timetracker/data/models/tracker.dart';
 import 'package:timetracker/data/repositories/tracker.dart';
 
-class TrackerListController extends GetxController {
+class TrackerListController extends GetxController with WidgetsBindingObserver {
   final TrackerRepository _trackerRepository = Get.find<TrackerRepository>();
 
   RxList<Tracker> trackers = <Tracker>[].obs;
 
   Box box = Hive.box(BoxStorage.boxName);
 
-  TrackerListController() {
+  onInit() {
+    super.onInit();
+    WidgetsBinding.instance.addObserver(this);
     _load();
+  }
+
+  onClose() {
+    super.onClose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.resumed) {
+      for (Tracker tracker in trackers) {
+        tracker.controller.updateTimeValue();
+      }
+    }
   }
 
   addItem(Tracker item) {
     _trackerRepository.insert(item).then((item) {
+      item.controller = TrackerItemController(item);
       trackers.add(item);
       updateSequence();
     });
@@ -58,6 +78,9 @@ class TrackerListController extends GetxController {
       for (int id in trackerSequence) {
         trackers.add(trackerList.firstWhere((e) => e.id == id));
       }
+    }
+    for (Tracker tracker in trackers) {
+      tracker.controller = TrackerItemController(tracker);
     }
   }
 }
