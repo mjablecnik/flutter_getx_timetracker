@@ -5,8 +5,8 @@ Flutter application for tracking of time
 ## Installation
 
   ```
-  git clone <this project>
-  cd <this project>
+  git clone https://github.com/mjablecnik/flutter_getx_timetracker
+  cd flutter_getx_timetracker
   flutter pub get
   ```
   
