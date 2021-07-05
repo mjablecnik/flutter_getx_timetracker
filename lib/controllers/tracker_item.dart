@@ -69,12 +69,24 @@ class TrackerItemController extends GetxController {
     _actionRepository.insert(Action(_tracker.value.id, ActionState.stop));
   }
 
+  reset() {
+    _stopwatch.stop();
+    _stopwatch.reset();
+    _inProgress.value = false;
+
+    _time.value = Duration.zero;
+    _startTime = _time.value;
+    _tracker.value.elapsedTime = _time.value;
+    _tracker.value.inProgress = _inProgress.value;
+    _trackerRepository.update(_tracker.value);
+  }
+
   _updateTime() {
     Future.delayed(
       Duration(seconds: 1),
       () {
-        _time.value = _startTime + _stopwatch.elapsed;
         if (_inProgress.value) {
+          _time.value = _startTime + _stopwatch.elapsed;
           _updateTime();
         }
       },

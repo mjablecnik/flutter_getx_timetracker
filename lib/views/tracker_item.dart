@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
-import 'package:implicitly_animated_reorderable_list/transitions.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:timetracker/controllers/tracker_item.dart';
 import 'package:timetracker/controllers/tracker_list.dart';
@@ -88,8 +87,8 @@ class TrackerItem extends StatelessWidget {
                           child: Icon(Icons.play_arrow),
                         ),
                       GestureDetector(
-                        //onTap: controller.play,
-                        child: Icon(Icons.save_alt),
+                        onTap: controller.reset,
+                        child: Icon(Icons.clear),
                       ),
                     ],
                   );

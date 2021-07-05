@@ -16,6 +16,7 @@ class TrackerRepository extends GetxService {
   }
 
   Future<int> update(Tracker tracker) async {
+    tracker.updated = DateTime.now();
     return await _db.update(
       TrackerTable.tableName,
       _entityMapper.toSqlMapFromTracker(tracker),
