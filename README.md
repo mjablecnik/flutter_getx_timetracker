@@ -10,6 +10,11 @@ Flutter application for tracking of time
   flutter pub get
   ```
   
+## Features
+ - Add/Edit/Remove timetracker
+ - Start/Stop/Reset timetracker
+ - Change position in list of timetrackers
+
 
 ## Special thanks
 
