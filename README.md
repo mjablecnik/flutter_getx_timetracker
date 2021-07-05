@@ -19,6 +19,17 @@ Flutter application for tracking of time
  - [sqflite](https://pub.dev/packages/sqflite): Great SQlite database plugin for Flutter.
 
 
+## Screenshots
+<table>
+  <tr><td>
+<img src="screenshots/Screenshot_20210705-091939.png" width="252" height="448">
+    </td><td>
+<img src="screenshots/Screenshot_20210705-092019.png" width="252" height="448">
+    </td><td>
+<img src="screenshots/Screenshot_20210705-092629.png" width="252" height="448">
+    </td></tr>
+</table>
+
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
